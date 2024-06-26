@@ -1,8 +1,19 @@
 import TodoItem from "./todos";
 
 const allProjects = [];
+
 export default class Project {
+    
+    static #id = 0;
+
+    static #incrementID() {
+        this.#id++; 
+    }
+
     constructor(title) {
+        
+        Project.#incrementID();
+        this.id = Project.#id;
         this.title = title;
         this.todoItems = [];
         allProjects.push(this);
@@ -28,6 +39,14 @@ export default class Project {
         this.todoItems.forEach(callback);
     }
 
+    removeTodoItemById(todoId) {
+        this.todoItems = this.todoItems.filter(todo => todo.id !== todoId);
+    }
+
+    static getProjectById(projectId){
+        return allProjects.find(project => project.id === projectId);
+    }
+
     getTodoItems() {
         return this.todoItems;
     }
@@ -35,4 +54,9 @@ export default class Project {
     getTitle(){
         return this.title;
     }
+
+    static getAllProjects(){
+        return allProjects;
+    }
+
 }

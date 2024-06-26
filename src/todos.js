@@ -1,5 +1,12 @@
 export default class TodoItem {
+    static #id = 0;
+
+    static #incrementID() {
+        this.#id++; 
+    }
     constructor(title, description, dueDate, priority) {
+        TodoItem.#incrementID();
+        this.id = TodoItem.#id;
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
@@ -7,8 +14,4 @@ export default class TodoItem {
         this.completed = false;
     }
 
-    
-    getTitle() {
-        return this.title;
-    }
 }
