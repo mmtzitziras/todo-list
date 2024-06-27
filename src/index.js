@@ -3,8 +3,14 @@ import TodoItem from './todos';
 import Project from './projects';
 import { RenderProjects, RenderTodos } from './renderer';
 
-let currentProject;
+
 const page = document.querySelector('body');
+
+export function onProjectClick(project) {
+    currentProject = project;
+    const currentTodos = document.querySelector('.current-todos-view-items');
+    RenderTodos(currentTodos, currentProject);
+}
 function pageLoad(){
 
     const allProjectsView = document.querySelector('.all-projects-view-items');
@@ -20,10 +26,10 @@ function pageLoad(){
     const todo3 = new TodoItem("Task 3", "Description 3", "2023-07-03", "Low");
     project2.addTodoItem(todo3);
 
-    currentProject = project1;
+    Project.setCurrentProject(1);
     
-    RenderProjects(allProjectsView, currentProject);
-    RenderTodos(currentTodos, currentProject);
+    RenderProjects(allProjectsView);
+    RenderTodos(currentTodos);
 
 
 }

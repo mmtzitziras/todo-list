@@ -1,6 +1,7 @@
 import TodoItem from "./todos";
 
 const allProjects = [];
+let currentProject;
 
 export default class Project {
     
@@ -59,4 +60,11 @@ export default class Project {
         return allProjects;
     }
 
+    static setCurrentProject(projectId){
+        currentProject = this.getProjectById(projectId);
+    }
+
+    static getCurrentProject(){
+        return currentProject;
+    }
 }

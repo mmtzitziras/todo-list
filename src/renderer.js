@@ -1,6 +1,9 @@
 import Project from './projects';
+import { onProjectClick } from '.';
 
-export function RenderTodos(currentTodos, currentProject){
+
+export function RenderTodos(currentTodos){
+    const currentProject = Project.getCurrentProject();
     currentProject.forEachTodo(todo => {
 
         const newTodo = document.createElement('div');
@@ -21,7 +24,7 @@ export function RenderTodos(currentTodos, currentProject){
     });
 }
 
-export function RenderProjects(allProjectsView, currentProject){
+export function RenderProjects(allProjectsView){
     Project.getAllProjects().forEach(project => {
         const newProject = document.createElement('button');
         newProject.classList.add('project');
@@ -34,7 +37,10 @@ export function RenderProjects(allProjectsView, currentProject){
         });
         newProject.addEventListener('click', (event) => {
             const projectId = parseInt(event.target.getAttribute('data-id'));
-            currentProject = Project.getProjectById(projectId);
+            Project.setCurrentProject(projectId);
+            const currentTodos = document.querySelector('.current-todos-view-items');
+            currentTodos.innerHTML = '';
+            RenderTodos(currentTodos);
         });
     })
 }
