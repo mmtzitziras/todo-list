@@ -5,6 +5,7 @@ let currentProject;
 
 export default class Project {
     
+    
     static #id = 0;
 
     static #incrementID() {
@@ -18,6 +19,7 @@ export default class Project {
         this.title = title;
         this.todoItems = [];
         allProjects.push(this);
+
     }
 
     addTodoItem(todoItem) {
@@ -56,12 +58,18 @@ export default class Project {
         return this.title;
     }
 
+
+    getId(){
+        return this.id;
+    }
+
     static getAllProjects(){
         return allProjects;
     }
 
     static setCurrentProject(projectId){
         currentProject = this.getProjectById(projectId);
+
     }
 
     static getCurrentProject(){

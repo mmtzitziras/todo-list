@@ -26,6 +26,7 @@ export function RenderTodos(currentTodos){
 
 export function RenderProjects(allProjectsView){
     Project.getAllProjects().forEach(project => {
+        
         const newProject = document.createElement('button');
         newProject.classList.add('project');
         newProject.setAttribute('data-id', project.id);
@@ -37,6 +38,9 @@ export function RenderProjects(allProjectsView){
         });
         newProject.addEventListener('click', (event) => {
             const projectId = parseInt(event.target.getAttribute('data-id'));
+            event.target.classList.add("selected-project");
+            const lastProjectId = Project.getCurrentProject().getId();
+
             Project.setCurrentProject(projectId);
             const currentTodos = document.querySelector('.current-todos-view-items');
             currentTodos.innerHTML = '';

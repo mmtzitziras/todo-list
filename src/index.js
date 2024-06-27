@@ -30,12 +30,10 @@ function pageLoad(){
     
     RenderProjects(allProjectsView);
     RenderTodos(currentTodos);
-
+    
 
 }
 
 pageLoad();
-
-
 
 
