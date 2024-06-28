@@ -1,4 +1,5 @@
 import Project from './projects';
+import TodoItem from './todos';
 import { onProjectClick } from '.';
 
 
@@ -7,12 +8,32 @@ export function RenderTodos(currentTodos){
     currentProject.forEachTodo(todo => {
 
         const newTodo = document.createElement('div');
+        const completed = todo.getComplete() ? 'checked' : 'unchecked';
+        
         newTodo.classList.add('todo');
-        newTodo.innerHTML = `<input type="checkbox" id="${todo.id}" name="done" unchecked />
+        newTodo.innerHTML = `<input class="todo-checkbox" type="checkbox" id="${todo.id}" name="done" ${completed} />
                             <div class='todo-title'>${todo.title}</div>
                             <button class="delete-todo-button" data-id="${todo.id}">X</button>`;
+        
+        if(todo.getComplete()){
+            newTodo.querySelector('.todo-title').style.textDecorationLine = "line-through";
+        }
+        else{
+            newTodo.querySelector('.todo-title').style.textDecorationLine = null;
+        }
         currentTodos.appendChild(newTodo); 
         
+        const checkboxButton = newTodo.querySelector('.todo-checkbox');
+        checkboxButton.addEventListener('click', (event) => {
+            if (event.target.checked){
+                newTodo.querySelector('.todo-title').style.textDecorationLine = "line-through";
+                todo.toggleCompleted();
+            }
+            else{
+                newTodo.querySelector('.todo-title').style.textDecorationLine = null;
+                todo.toggleCompleted();
+            }
+        })
         const deleteButton = newTodo.querySelector('.delete-todo-button');
             deleteButton.addEventListener('click', (event) => {
                 const todoId = parseInt(event.target.getAttribute('data-id'));
@@ -37,9 +58,15 @@ export function RenderProjects(allProjectsView){
             
         });
         newProject.addEventListener('click', (event) => {
+
+            // if(document.querySelector('.selected-project') !== null){
+            //     const lastProject = document.querySelectorAll('.selected-project');
+            //     console.log(lastProject);
+            //     lastProject.classList.remove('.selected-project');
+            // }
+            
             const projectId = parseInt(event.target.getAttribute('data-id'));
-            event.target.classList.add("selected-project");
-            const lastProjectId = Project.getCurrentProject().getId();
+            // event.target.classList.add("selected-project");
 
             Project.setCurrentProject(projectId);
             const currentTodos = document.querySelector('.current-todos-view-items');

@@ -14,4 +14,12 @@ export default class TodoItem {
         this.completed = false;
     }
 
+    getComplete(){
+        return this.completed;
+    }
+
+    toggleCompleted(){
+        this.completed = !this.completed;
+    }
+
 }

@@ -69,7 +69,6 @@ export default class Project {
 
     static setCurrentProject(projectId){
         currentProject = this.getProjectById(projectId);
-
     }
 
     static getCurrentProject(){
